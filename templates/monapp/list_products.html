@@ -1,0 +1,51 @@
+{% extends 'monapp/base.html' %}
+
+{% block title %}
+Mon application DJANGO
+{% endblock %}
+
+{% block menu %}
+<h1>{{titremenu}}</h1>
+<a href="{% url 'product-add' %}" class="btn btn-primary mt-2">Créer un nouveau produit</a>
+{% endblock %}
+
+{% block contenu %}
+    <table class="table">
+        <thead>
+            <th>Nom</th>
+            <th>Code</th>
+            <th>Prix HT</th>
+            <th>Prix TTC</th>
+            <th>Date Création</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for prdct in products %}
+        <tr>
+            <td>{{ prdct.name }}</a></td>
+            <td>{{ prdct.code }} </td>
+            <td>{{ prdct.price_ht }} </td>
+            <td>{{ prdct.price_ttc }} </td>
+            <td>{{ prdct.date_creation }} </td>
+            <td>
+                <a href="{% url 'product-detail' prdct.id %}" class="btn btn-primary mt-2">Détails</a>
+                <a href="{% url 'product-update' prdct.id %}" class="btn btn-warning mt-2">Modifier</a>
+                <a href="{% url 'product-delete' prdct.id %}" class="btn btn-danger mt-2">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p>
+        J'ai
+            {% if products|length < 5 %}
+            peu de
+            {% elif products|length < 10 %}
+            quelques
+            {% else %}
+            beaucoup de
+            {% endif %}
+            produits.
+    </p>
+   
+{% endblock %}

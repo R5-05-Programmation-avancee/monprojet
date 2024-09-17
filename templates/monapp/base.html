@@ -1,0 +1,70 @@
+<!doctype html>
+
+{% load static %}
+
+<html lang="fr">
+	<head>
+        <meta charset="utf -8">
+
+		<title>{% block title %}{% endblock %}</title>
+
+        {% block styles %}
+        <link rel="stylesheet" href="{% static 'styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.min.css' %}">
+        {% endblock %}
+
+	</head>
+    <body>
+            {% block nav %}
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'product-list' %}">Produits</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'item-list' %}">Déclinaisons</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'attribute-list' %}">Attributs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'about' %}">A Propos</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Déconnexion</a>
+                        </li>
+                        {%else%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Connexion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Inscription</a>
+                        </li>
+                        {%endif%}
+                        
+                    </ul>
+                </div>
+            </nav >
+            {% endblock %}
+            <main role="main" class="container top-pushed">
+                {% block menu %}{% endblock %}
+                <div class="jumbotron">
+                {% block contenu %}
+                {% endblock %}
+                </div>
+            </main >
+            <footer class="footer">
+                <div class="container">
+                   <p>&copy; Copyright {% now "Y" %} by Titof Production Copyrigh (c)</p>
+                </div>
+            </footer>  
+    </body>
+</html>
