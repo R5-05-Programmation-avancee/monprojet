@@ -12,6 +12,8 @@ from django.views.generic import TemplateView,ListView,DetailView,CreateView,Upd
 from django.core.mail import send_mail
 from monapp.forms import ContactUsForm, ProductAttributeForm, ProductForm, ProductItemForm
 from monapp.models import Product, ProductAttribute, ProductAttributeValue, ProductItem
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class HomeView(TemplateView):
     template_name = "monapp/hello.html"
@@ -143,6 +145,7 @@ class ProductItemListView(ListView):
   
     def get_queryset(self ):
         return ProductItem.objects.select_related('product').prefetch_related('attributes')
+        #return ProductItem.objects.all()
     
     def get_context_data(self, **kwargs):
         context = super(ProductItemListView, self).get_context_data(**kwargs)
@@ -189,12 +192,14 @@ class ProductItemDeleteView(DeleteView):
 class ProductAttributeListView(ListView):
     model = ProductAttribute
     template_name = "monapp/list_attributes.html"
-      
+    context_object_name = "productattributes"
+
+    def get_queryset(self ):
+        return ProductAttribute.objects.all().prefetch_related('productattributevalue_set')
+    
     def get_context_data(self, **kwargs):
         context = super(ProductAttributeListView, self).get_context_data(**kwargs)
         context['titremenu'] = "Liste des attributs"
-        attributes = ProductAttribute.objects.all().prefetch_related('productattributevalue_set')
-        context['attributes']=attributes
         return context
 
 class ProductAttributeDetailView(DetailView):
@@ -205,7 +210,6 @@ class ProductAttributeDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(ProductAttributeDetailView, self).get_context_data(**kwargs)
         context['titremenu'] = "Détail attribut"
-
         context['values'] = ProductAttributeValue.objects.filter(product_attribute=self.object).order_by('position')
                        
         return context

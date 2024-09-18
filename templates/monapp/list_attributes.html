@@ -18,7 +18,7 @@ Mon application DJANGO
             <th>Actions</th>
         </thead>
         <tbody>
-        {% for attribute in attributes %}
+        {% for attribute in productattributes %}
         <tr>
             <td>{{ attribute.name}}</a></td>
             <td>{% for value in attribute.productattributevalue_set.all %}
