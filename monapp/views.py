@@ -145,8 +145,7 @@ class ProductItemListView(ListView):
   
     def get_queryset(self ):
         return ProductItem.objects.select_related('product').prefetch_related('attributes')
-        #return ProductItem.objects.all()
-    
+           
     def get_context_data(self, **kwargs):
         context = super(ProductItemListView, self).get_context_data(**kwargs)
         context['titremenu'] = "Liste des déclinaisons"
