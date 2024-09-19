@@ -335,5 +335,8 @@ class ProductAttributeValueUpdateView(UpdateView):
         valeur = form.save()
         return redirect('value-detail', valeur.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductAttributeValueDeleteView(DeleteView):
-    pass
+    model = ProductAttributeValue
+    template_name = "monapp/delete_value.html"
+    success_url = reverse_lazy('value-list')
