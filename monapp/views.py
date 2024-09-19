@@ -106,20 +106,7 @@ class ProductDetailView(DetailView):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['titremenu'] = "Détail produit"
         return context
-
-def ProductCreate(request):
-
-    if request.method == 'POST':
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            product = form.save()
-            return redirect('product-detail', product.id)
-
-    else:
-        form = ProductForm()
     
-    return render(request, "monapp/new_product.html", {'form': form})
-
 @method_decorator(login_required, name='dispatch')
 class ProductCreateView(CreateView):
     model = Product
@@ -299,3 +286,33 @@ class DisconnectView(TemplateView):
     def get(self, request, **kwargs):
         logout(request)
         return render(request, self.template_name)
+
+class ProductAttributeValueListView(ListView):
+    model = ProductAttributeValue
+    template_name = "monapp/list_values.html"
+    context_object_name = "productattributevalues"
+
+    def get_queryset(self ):
+        # Surcouche pour filtrer les résultats en fonction de la recherche
+        query = self.request.GET.get('search')  # Récupérer le terme de recherche depuis la requête GET
+        if query:
+            return ProductAttributeValue.objects.filter(value__icontains=query)  # Filtre les produits par nom (insensible à la casse)
+        
+        return ProductAttributeValue.objects.all().select_related('product_attribute')  
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProductAttributeValueListView, self).get_context_data(**kwargs)
+        context['titremenu'] = "Liste des valeurs des attributs"
+        return context
+
+class ProductAttributeValueDetailView(DetailView):
+    pass
+
+class ProductAttributeValueCreateView(CreateView):
+    pass
+
+class ProductAttributeValueUpdateView(UpdateView):
+    pass
+
+class ProductAttributeValueDeleteView(DeleteView):
+    pass

@@ -1,0 +1,45 @@
+{% extends 'monapp/base.html' %}
+
+{% block title %}
+Mon application DJANGO
+{% endblock %}
+
+{% block menu %}
+<h1>Liste des valeurs</h1>
+<a href="{% url 'value-add' %}" class="btn btn-primary mt-2">Créer une nouvelle valeur</a>
+{% endblock %}
+
+{% block contenu %}
+            
+    <table class="table">
+        <thead>
+            <th>Valeur</th>
+            <th>Position</th>
+            <th>Attribut associé</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        {% for elem in productattributevalues %}
+        <tr>
+            <td>{{ elem.value }}</td>
+            <td>{{ elem.position }}</td>
+            <td>{{ elem.product_attribute.name }}</a></td>
+            <td>
+                <a href="{% url 'value-detail' elem.id %}" class="btn btn-primary mt-2">Détails</a>
+                <a href="{% url 'value-update' elem.id %}" class="btn btn-warning mt-2">Modifier</a>
+                <a href="{% url 'value-delete' elem.id %}" class="btn btn-danger mt-2">Supprimer</a>
+            </td>
+          
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     <!-- Barre de recherche -->
+     <p class="lead mb-3 ml-0">Rechercher un élément...</p>
+     <hr/>
+     <form method="GET" action="">
+         <input class="form-control" type="text" name="search" placeholder="Tapez ici votre recherche" value="{{ request.GET.search }}">
+         <button type="submit" class="btn btn-success mt-2">Rechercher</button>
+     </form>
+     <hr/>
+{% endblock %}

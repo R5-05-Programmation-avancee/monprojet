@@ -12,13 +12,15 @@ urlpatterns = [
     path("about", views.AboutView.as_view(),name="about"),
     path("home/<param>",views.IndexView.as_view()),
 
-    path("product/list",views.ProductListView.as_view(),name="product-list"),
-    path("item/list",views.ProductItemListView.as_view() ,name='item-list'),
+    path("products/list",views.ProductListView.as_view(),name="product-list"),
+    path("items/list",views.ProductItemListView.as_view() ,name='item-list'),
     path("attributes/list",views.ProductAttributeListView.as_view() ,name='attribute-list'),
+    path("values/list",views.ProductAttributeValueListView.as_view() ,name='value-list'),
 
     path("product/<pk>",views.ProductDetailView.as_view(), name="product-detail"),
     path("item/<pk>",views.ProductItemDetailView.as_view(), name="item-detail"),
     path("attribute/<pk>",views.ProductAttributeDetailView.as_view() ,name='attribute-detail'),
+    path("value/<pk>",views.ProductAttributeValueDetailView.as_view() ,name='value-detail'),
     
     path('login/', views.ConnectView.as_view(), name='login'),
     path('logout/', views.DisconnectView.as_view(), name='logout'),
@@ -27,13 +29,16 @@ urlpatterns = [
     path("product/add/",views.ProductCreateView.as_view(), name="product-add"),
     path("attribute/add/",views.ProductAttributeCreateView.as_view(), name="attribute-add"),
     path("item/add/",views.ProductItemCreateView.as_view(), name="item-add"),
+    path("value/add/",views.ProductAttributeValueCreateView.as_view(), name="value-add"),
 
     path("product/<pk>/update/",views.ProductUpdateView.as_view(), name="product-update"),
     path("attribute/<pk>/update/",views.ProductAttributeUpdateView.as_view(), name="attribute-update"),
     path("item/<pk>/update/",views.ProductItemUpdateView.as_view(), name="item-update"),
+    path("value/<pk>/update/",views.ProductAttributeValueUpdateView.as_view(), name="value-update"),
 
     path("product/<pk>/delete/",views.ProductDeleteView.as_view(), name="product-delete"),
     path("attribute/<pk>/delete/",views.ProductAttributeDeleteView.as_view(), name="attribute-delete"),
     path("item/<pk>/delete/",views.ProductItemDeleteView.as_view(), name="item-delete"),
+    path("value/<pk>/delete/",views.ProductAttributeValueDeleteView.as_view(), name="value-delete"),
 ]
 
