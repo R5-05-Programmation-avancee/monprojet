@@ -42,16 +42,4 @@ Mon application DJANGO
         {% endfor %}
         </tbody>
     </table>
-          
-            <p>
-                J'ai
-                    {% if productattributes|length < 5 %}
-                    peu d'
-                    {% elif productattributes|length < 10 %}
-                    quelques
-                    {% else %}
-                    beaucoup d'
-                    {% endif %}
-                    attributs.
-            </p>
-            {% endblock %}
+{% endblock %}

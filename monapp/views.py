@@ -85,7 +85,12 @@ class ProductListView(ListView):
     context_object_name = "products"
   
     def get_queryset(self ):
-        return Product.objects.order_by("price_ttc")
+        # Surcouche pour filtrer les résultats en fonction de la recherche
+        query = self.request.GET.get('search')  # Récupérer le terme de recherche depuis la requête GET
+        if query:
+            return Product.objects.filter(name__icontains=query)  # Filtre les produits par nom (insensible à la casse)
+        
+        return Product.objects.all()  # Si aucun terme de recherche, retourner tous les produits
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
@@ -145,9 +150,15 @@ class ProductItemListView(ListView):
     model = ProductItem
     template_name = "monapp/list_items.html"
     context_object_name = "productitems"
-  
+    
     def get_queryset(self ):
-        return ProductItem.objects.select_related('product').prefetch_related('attributes')
+        # Surcouche pour filtrer les résultats en fonction de la recherche
+        query = self.request.GET.get('search')  # Récupérer le terme de recherche depuis la requête GET
+        if query:
+            return ProductItem.objects.filter(code__icontains=query)  # Filtre les produits par nom (insensible à la casse)
+        
+        return ProductItem.objects.select_related('product').prefetch_related('attributes')  
+        
            
     def get_context_data(self, **kwargs):
         context = super(ProductItemListView, self).get_context_data(**kwargs)
@@ -200,7 +211,12 @@ class ProductAttributeListView(ListView):
     context_object_name = "productattributes"
 
     def get_queryset(self ):
-        return ProductAttribute.objects.all().prefetch_related('productattributevalue_set')
+        # Surcouche pour filtrer les résultats en fonction de la recherche
+        query = self.request.GET.get('search')  # Récupérer le terme de recherche depuis la requête GET
+        if query:
+            return ProductAttribute.objects.filter(name__icontains=query)  # Filtre les produits par nom (insensible à la casse)
+        
+        return ProductAttribute.objects.all().prefetch_related('productattributevalue_set')  
     
     def get_context_data(self, **kwargs):
         context = super(ProductAttributeListView, self).get_context_data(**kwargs)

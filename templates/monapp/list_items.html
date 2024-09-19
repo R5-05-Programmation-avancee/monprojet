@@ -39,16 +39,4 @@ Mon application DJANGO
         {% endfor %}
         </tbody>
     </table>
-
-            <p>
-                J'ai
-                    {% if productitems|length < 5 %}
-                    peu de
-                    {% elif productitems|length < 10 %}
-                    quelques
-                    {% else %}
-                    beaucoup de
-                    {% endif %}
-                    déclinaisons préférées.
-            </p>
-            {% endblock %}
+{% endblock %}
