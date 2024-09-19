@@ -1,0 +1,29 @@
+{% extends 'monapp/base.html' %}
+
+{% block title %}
+Mon application DJANGO
+{% endblock %}
+
+{% block menu %}
+<h1>{{titremenu}}</h1>
+{% endblock %}
+
+{% block contenu %}
+    
+
+    <ul>
+        <li>Libellé : {{ productattributevalue.value }}</li>
+        <li>Position : {{ productattributevalue.position }}</li>
+        <li>Attribut : {{ productattributevalue.product_attribute }}</li>
+       
+        
+    </ul>    
+    
+
+    <a href="{% url 'value-list' %}" class="btn btn-primary mt-2">Retour</a>
+    <a href="{% url 'value-update' productattributevalue.id %}" class="btn btn-warning mt-2">Modifier</a>
+    <a href="{% url 'value-delete' productattributevalue.id %}" class="btn btn-danger mt-2">Supprimer</a>
+
+
+   
+{% endblock %}

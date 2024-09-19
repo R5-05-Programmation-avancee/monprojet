@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.core.mail import send_mail
-from monapp.forms import ContactUsForm, ProductAttributeForm, ProductForm, ProductItemForm
+from monapp.forms import ContactUsForm, ProductAttributeForm, ProductAttributeValueForm, ProductForm, ProductItemForm
 from monapp.models import Product, ProductAttribute, ProductAttributeValue, ProductItem
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -306,10 +306,24 @@ class ProductAttributeValueListView(ListView):
         return context
 
 class ProductAttributeValueDetailView(DetailView):
-    pass
+    model = ProductAttributeValue
+    template_name = "monapp/detail_value.html"
+    context_object_name = "productattributevalue"
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductAttributeValueDetailView, self).get_context_data(**kwargs)
+        context['titremenu'] = "Détail valeur"
+        return context
+
+@method_decorator(login_required, name='dispatch')
 class ProductAttributeValueCreateView(CreateView):
-    pass
+    model = ProductAttributeValue
+    form_class=ProductAttributeValueForm
+    template_name = "monapp/new_value.html"
+    
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        valeur = form.save()
+        return redirect('value-detail', valeur.id)
 
 class ProductAttributeValueUpdateView(UpdateView):
     pass
