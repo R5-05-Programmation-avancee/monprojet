@@ -115,6 +115,7 @@ def ProductCreate(request):
     
     return render(request, "monapp/new_product.html", {'form': form})
 
+@method_decorator(login_required, name='dispatch')
 class ProductCreateView(CreateView):
     model = Product
     form_class=ProductForm
@@ -124,6 +125,7 @@ class ProductCreateView(CreateView):
         product = form.save()
         return redirect('product-detail', product.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductUpdateView(UpdateView):
     model = Product
     form_class=ProductForm
@@ -133,6 +135,7 @@ class ProductUpdateView(UpdateView):
         product = form.save()
         return redirect('product-detail', product.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductDeleteView(DeleteView):
     model = Product
     template_name = "monapp/delete_product.html"
@@ -165,6 +168,7 @@ class ProductItemDetailView(DetailView):
 
         return context
 
+@method_decorator(login_required, name='dispatch')
 class ProductItemCreateView(CreateView):
     model = ProductItem
     form_class=ProductItemForm
@@ -174,6 +178,7 @@ class ProductItemCreateView(CreateView):
         item = form.save()
         return redirect('item-detail', item.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductItemUpdateView(UpdateView):
     model = ProductItem
     form_class=ProductItemForm
@@ -183,6 +188,7 @@ class ProductItemUpdateView(UpdateView):
         item = form.save()
         return redirect('item-detail', item.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductItemDeleteView(DeleteView):
     model = ProductItem
     template_name = "monapp/delete_item.html"
@@ -213,6 +219,7 @@ class ProductAttributeDetailView(DetailView):
                        
         return context
 
+@method_decorator(login_required, name='dispatch')
 class ProductAttributeCreateView(CreateView):
     model = ProductAttribute
     form_class=ProductAttributeForm
@@ -222,6 +229,7 @@ class ProductAttributeCreateView(CreateView):
         attribute = form.save()
         return redirect('attribute-detail', attribute.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductAttributeUpdateView(UpdateView):
     model = ProductAttribute
     form_class=ProductAttributeForm
@@ -231,6 +239,7 @@ class ProductAttributeUpdateView(UpdateView):
         product = form.save()
         return redirect('attribute-detail', product.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductAttributeDeleteView(DeleteView):
     model = ProductAttribute
     template_name = "monapp/delete_attribute.html"
