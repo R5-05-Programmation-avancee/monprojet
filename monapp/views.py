@@ -325,8 +325,15 @@ class ProductAttributeValueCreateView(CreateView):
         valeur = form.save()
         return redirect('value-detail', valeur.id)
 
+@method_decorator(login_required, name='dispatch')
 class ProductAttributeValueUpdateView(UpdateView):
-    pass
+    model = ProductAttributeValue
+    form_class=ProductAttributeValueForm
+    template_name = "monapp/update_value.html"
+    
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        valeur = form.save()
+        return redirect('value-detail', valeur.id)
 
 class ProductAttributeValueDeleteView(DeleteView):
     pass
