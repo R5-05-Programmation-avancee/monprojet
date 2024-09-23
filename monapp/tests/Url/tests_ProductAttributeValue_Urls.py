@@ -5,7 +5,7 @@ from monapp.views import ProductAttributeValueCreateView, ProductAttributeValueL
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-class TestUrls(SimpleTestCase):
+class ProductAttributeValueTestUrls(SimpleTestCase):
 
     def test_create_view_url_is_resolved(self):
         """
@@ -23,7 +23,7 @@ class TestUrls(SimpleTestCase):
 
 
 
-class TestUrlResponses(TestCase):
+class ProductAttributeValueTestUrlResponses(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='secret')
@@ -44,7 +44,7 @@ class TestUrlResponses(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class TestUrlResponsesWithParameters(TestCase):
+class ProductAttributeValueTestUrlResponsesWithParameters(TestCase):
     
     def setUp(self):
         self.attribute = ProductAttribute.objects.create(name="Couleur")
@@ -66,7 +66,7 @@ class TestUrlResponsesWithParameters(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
-class TestUrlRedirect(TestCase):
+class ProductAttributeValueTestUrlRedirect(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='secret')
