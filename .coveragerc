@@ -1,0 +1,15 @@
+[run]
+source = monapp
+omit =
+    */migrations/*
+    */settings/*
+    */wsgi.py
+    */asgi.py
+    *__init__.py
+
+[report]
+# Pour afficher uniquement les fichiers qui ne sont pas à 100%
+show_missing = True
+
+[html]
+directory = htmlcov
